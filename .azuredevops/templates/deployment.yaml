@@ -30,5 +30,5 @@ stages:
                     echo '[Action] adding a token to npmrc'
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
                           
-                    npm publish --tag $(tag)
+                    npm publish --access=public --tag $(tag)
                   workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact.Name)/s'
