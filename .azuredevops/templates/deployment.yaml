@@ -25,6 +25,7 @@ stages:
                 inputs:
                   script: |
                     echo '[Action] logging package files'
+                    pwd
                     ls
                     echo '[Action] adding a token to npmrc'
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
