@@ -31,4 +31,4 @@ stages:
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
                           
                     npm publish --tag $(tag)
-                  workingDirectory: '$(System.ArtifactsDirectory)'
+                  workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact.Name)'
