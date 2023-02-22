@@ -1,0 +1,7 @@
+variables:
+  - name: 'Project.Name'
+    value: 'audit-trail'
+  - name: 'Artifact.Name'
+    value: '$(Project.Name)-artifact'
+  - name: 'Archive.Name'
+    value: '$(Project.Name)-archive'

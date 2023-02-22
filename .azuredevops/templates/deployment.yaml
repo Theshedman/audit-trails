@@ -1,0 +1,32 @@
+stages:
+  - stage: Publish
+    displayName: Publish
+    jobs:
+    - deployment:
+      displayName: Publish to NPM Repository
+      pool:
+        vmImage: 'ubuntu-latest'
+      strategy:
+          runOnce:
+            deploy:
+              steps:
+              - checkout: none
+              
+              - task: DownloadBuildArtifacts@1
+                inputs:
+                  buildType: 'current'
+                  downloadType: 'specific'
+                  itemPattern: '**/*.tzg'
+                  downloadPath: '$(System.ArtifactsDirectory)'
+                  extractTars: true
+              
+              - task: CmdLine@2
+                inputs:
+                  script: |
+                    echo '[Action] logging package files'
+                    ls
+                    echo '[Action] adding a token to npmrc'
+                    echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
+                          
+                    npm publish --tag $(tag)
+                  workingDirectory: '$(System.ArtifactsDirectory)'

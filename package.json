@@ -6,6 +6,7 @@
   "main": "dist/src/main.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:cov": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "start": "tsc && node --experimental-modules dist/src/main.js",
     "lint": "eslint . --ext .ts --fix"
   },
@@ -98,7 +99,12 @@
     ],
     "coveragePathIgnorePatterns": [
       "./node_modules/",
-      "./dist/"
+      "./dist/",
+      "./@types/",
+      "./coverage/",
+      "./src/database/migrations/",
+      "./src/audits/audit.repository.ts",
+      "./src/audits/audit.logger.ts"
     ]
   }
 }

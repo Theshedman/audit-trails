@@ -1,0 +1,11 @@
+trigger:
+  - main
+
+variables:
+  - group: npm-vars
+  - template: templates/var.yaml
+  - template: templates/production-var.yaml
+
+stages:
+  - template: templates/build.yaml
+  - template: templates/deployment.yaml

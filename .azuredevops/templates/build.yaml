@@ -1,0 +1,34 @@
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+    - job: ArtifactBuild
+      displayName: Build and Push Artifact
+      pool:
+        inputs:
+          pollingTimeoutSec: '300'
+        vmImage: ubuntu-latest
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '16.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm install
+        displayName: 'Install dependencies'
+      - script: |
+          npm pack
+      displayName: 'Package package'
+      - task: CopyFiles@2
+        inputs:
+          contents: '*.tgz'
+          targetFolder: $(Build.ArtifactStagingDirectory)
+        displayName: 'Copy archives to artifacts staging directory'
+      - task: PublishPipelineArtifact@1
+        displayName: Publish pipeline artifact
+        inputs:
+          targetPath: '$(Pipeline.Workspace)'
+          artifact: '$(Artifact.Name)'
+          publishLocation: 'pipeline'

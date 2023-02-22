@@ -1,0 +1,65 @@
+trigger: none
+pr:
+  - dev
+
+pool:
+  inputs:
+    pollingTimeoutSec: '300'
+  vmImage: ubuntu-latest
+
+steps:
+  # Prepare SonarQube Analysis Configuration
+  - task: SonarQubePrepare@5
+    displayName: Prepare SonarQube
+    inputs:
+      SonarQube: 'Analyze "audit-trail"'
+      scannerMode: 'CLI'
+      configMode: 'manual'
+      cliProjectKey: $(sonarqubeProjectKey)
+      cliSources: '.'
+      extraProperties: |
+        sonar.javascript.lcov.reportPaths=./coverage/lcov.info
+
+  # Setup NodeJS environment
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+    displayName: 'Setup NodeJS Environment'
+
+  # Install Dependencies
+  - script: |
+      rm -rf node_modules && yarn install --frozen-lockfile
+    displayName: 'Install Dependencies'
+
+  # Reformat Codebase
+  - script: |
+      npm run lint
+    displayName: 'Reformat Codebase'
+
+  # Run Test
+  - script: |
+      npm run test:cov
+    displayName: 'Run Test Coverage'
+
+  # Azure Test Pipeline
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '$(System.DefaultWorkingDirectory)/coverage/junit.xml'
+      mergeTestResults: true
+      testRunTitle: 'Jest Unit Tests'
+      failTaskOnFailedTests: true
+    displayName: 'Publish unit test report to Azure Pipeline'
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+    displayName: 'Publish Test Coverage report to Azure Pipeline'
+
+    # Run Code Analysis
+  - task: 'SonarQubeAnalyze@5'
+    displayName: 'Performing SonarQube Code Analysis'
+
+  # Publish Quality Gate Result to Zigah SonarQube server
+  - task: 'SonarQubePublish@5'
+    displayName: 'Publishing Code Analysis Result to SonarQube Server'
