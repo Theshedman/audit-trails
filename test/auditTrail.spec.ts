@@ -1,10 +1,10 @@
 // @eslint-ginore
 import request from 'supertest';
 import { jest } from '@jest/globals';
-import { AuditTrail } from '../src/main.js';
-import { Env } from '../src/utils/env.js';
-import { AuditRepository } from '../src/audits/audit.repository.js';
-import { type AuditQueryFilter, type AuditTrailProps, type Pagination } from '../src/types/index.js';
+import { Env } from '../src/utils/env';
+import { AuditTrail } from '../src/main';
+import { AuditRepository } from '../src/audits/audit.repository';
+import type { AuditQueryFilter, AuditTrailProps, Pagination } from '../src/types/index';
 
 describe('Audit Trails', () => {
   let auditTrail: AuditTrail;

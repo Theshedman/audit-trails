@@ -45,6 +45,7 @@ stages:
 
                     echo '[Action] copy the compiled files to the newly created audit-trail directory'
                     cp -rfv ../dist ./dist
+                    cp -rfv ../package*.json ../.eslintrc.json ../README.md ./
 
                     echo '[Action] adding a token to npmrc'
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
