@@ -29,6 +29,7 @@ stages:
                   npm install
                 displayName: 'Install dependencies'
               - script: |
+                  cd $(System.ArtifactsDirectory)/$(Artifact.Name)/s
                   npm run build
                 displayName: 'Compile Typescript'
               - task: CmdLine@2
