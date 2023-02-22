@@ -6,6 +6,7 @@ stages:
       displayName: Publish to NPM Repository
       pool:
         vmImage: 'ubuntu-latest'
+      environment: '$(Namespace).$(Namespace)'
       strategy:
           runOnce:
             deploy:
