@@ -17,7 +17,7 @@ stages:
                 inputs:
                   buildType: 'current'
                   downloadType: 'specific'
-                  itemPattern: '**/*.tzg'
+                  itemPattern: '**'
                   downloadPath: '$(System.ArtifactsDirectory)'
                   extractTars: true
               
@@ -31,4 +31,4 @@ stages:
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
                           
                     npm publish --tag $(tag)
-                    
+                  workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact.Name)'

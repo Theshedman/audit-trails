@@ -19,13 +19,11 @@ stages:
           npm install
         displayName: 'Install dependencies'
       - script: |
+          npm run build
+        displayName: 'Compile Typescript'
+      - script: |
           npm pack
         displayName: 'Package package'
-      - task: CopyFiles@2
-        inputs:
-          contents: '*.tgz'
-          targetFolder: $(Build.ArtifactStagingDirectory)
-        displayName: 'Copy archives to artifacts staging directory'
       - task: PublishPipelineArtifact@1
         displayName: Publish pipeline artifact
         inputs:

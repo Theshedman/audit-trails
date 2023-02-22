@@ -8,7 +8,8 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "test:cov": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "start": "tsc && node --experimental-modules dist/src/main.js",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint . --ext .ts --fix",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
