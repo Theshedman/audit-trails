@@ -38,3 +38,7 @@ test-report.xml
 .env
 yarn.lock
 .vscode
+
+.tsbuildinfo
+@types
+!./src/types

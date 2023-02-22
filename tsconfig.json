@@ -1,35 +1,40 @@
 {
   "compilerOptions": {
-    /* Projects */
-    "incremental": true,
-    "tsBuildInfoFile": "./.tsbuildinfo",
-
-    /* Language and Environment */
-    "target": "es2016",
-    "lib": ["es2016"],
-
-    /* Modules */
-    "module": "commonjs",
-
-    /* Emit */
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "sourceMap": true,
+    "declarationDir": "./@types",
+    "isolatedModules": true,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "useDefineForClassFields": true,
+    "moduleDetection": "auto",
+    "module": "NodeNext",
+    "rootDir": "./",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "allowJs": true,
     "outDir": "./dist",
     "importHelpers": true,
-    "declarationDir": "./types",
-
-    /* Interop Constraints */
-    "isolatedModules": true,
+    "preserveConstEnums": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-
-    /* Type Checking */
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
     "alwaysStrict": true,
-
-    /* Completeness */
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "allowUnreachableCode": false,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["./dist", "./node_modules", "./types"],
+  "include": ["./src", "./**/*.json", "./**/*.js", "./test"]
 }
