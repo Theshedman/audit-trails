@@ -1,6 +1,6 @@
 {
   "name": "@zigah/audit-trail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An activity log to capture which element has been changed, when and by whom, as well as displaying both the old and the updated value of the changed element.",
   "main": "dist/src/main.js",
   "scripts": {
