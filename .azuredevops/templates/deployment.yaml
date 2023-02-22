@@ -26,13 +26,15 @@ stages:
                   versionSpec: '16.x'
                 displayName: 'Install Node.js'
               - script: |
+                  echo '[Action] Changing directory to the project root'
                   cd $(System.ArtifactsDirectory)/$(Artifact.Name)/s
-                    echo '[Action] Changing directory to the project root'
-                    pwd
-                    ls
+                  
                   npm install
                 displayName: 'Install dependencies'
               - script: |
+                  echo '[Action] Changing directory to the project root'
+                  cd $(System.ArtifactsDirectory)/$(Artifact.Name)/s
+                  
                   npm run build
                 displayName: 'Compile Typescript'
               - task: CmdLine@2
