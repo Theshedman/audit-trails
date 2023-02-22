@@ -9,17 +9,6 @@ stages:
           pollingTimeoutSec: '300'
         vmImage: ubuntu-latest
       steps:
-      - task: NodeTool@0
-        inputs:
-          versionSource: 'spec'
-          versionSpec: '16.x'
-        displayName: 'Install Node.js'
-      - script: |
-          npm install
-        displayName: 'Install dependencies'
-      - script: |
-          npm run build
-        displayName: 'Compile Typescript'
       - task: PublishPipelineArtifact@1
         displayName: Publish pipeline artifact
         inputs:

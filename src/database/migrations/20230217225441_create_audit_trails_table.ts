@@ -29,8 +29,8 @@ export async function up (knex: Knex): Promise<void> {
                     tableBuilder.uuid('performed_for');
                     tableBuilder.string('role').notNullable();
                     tableBuilder.string('endpoint').notNullable();
-                    tableBuilder.text('action');
-                    tableBuilder.string('description').notNullable();
+                    tableBuilder.text('action').notNullable();
+                    tableBuilder.string('description');
                     tableBuilder.string('status').notNullable();
                     tableBuilder.string('status_code').notNullable();
                     tableBuilder.uuid('resource_id');

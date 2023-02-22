@@ -20,12 +20,29 @@ stages:
                   itemPattern: '**'
                   downloadPath: '$(System.ArtifactsDirectory)'
                   extractTars: true
-              
+              - task: NodeTool@0
+                inputs:
+                  versionSource: 'spec'
+                  versionSpec: '16.x'
+                displayName: 'Install Node.js'
+              - script: |
+                  npm install
+                displayName: 'Install dependencies'
+              - script: |
+                  npm run build
+                displayName: 'Compile Typescript'
               - task: CmdLine@2
                 inputs:
                   script: |
+                    echo '[Action] creating and changing into audit-trail directory...'
+                    mkdir audit-trail && cd audit-trail
+
+                    echo '[Action] copy the compiled files to the newly created audit-trail directory'
+                    cp -rfv ../dist ./dist
+
                     echo '[Action] adding a token to npmrc'
                     echo '//registry.npmjs.org/:_authToken=$(NpmToken)' > .npmrc
-                          
+                    
+                    echo '[Action] publish the npm package to the organization npm team repository'
                     npm publish --access=public --tag $(tag)
                   workingDirectory: '$(System.ArtifactsDirectory)/$(Artifact.Name)/s'
