@@ -1,17 +1,25 @@
 import knex, { type Knex } from 'knex';
-import { type DbConnection, type ConfigObject } from '../types/index.js';
-import { Env } from '../utils/env.js';
-import { Logger } from '../audits/audit.logger.js';
+
+import { Env } from '../utils/env';
+import { Logger } from '../audits/audit.logger';
+import { type MigrationSource } from './migration.source';
+import type { DbConnection, ConfigObject } from '../types/index';
 
 export class KnexFile {
-  private readonly env: DbConnection;
   private readonly db: Knex;
+  private readonly env: DbConnection;
+  private readonly migrationSource: MigrationSource;
 
-  constructor() {
+  constructor(options: DbConnection, migrationSource: MigrationSource) {
     Logger.log('Initializing instance', KnexFile.name);
+
+    if (!Env.getAll()) {
+      Env.save(options);
+    }
 
     this.env = Env.getAll();
     this.db = this.initDB();
+    this.migrationSource = migrationSource;
   }
 
   private getConnection(): DbConnection {
@@ -47,12 +55,16 @@ export class KnexFile {
       pool: {
         min: 0,
         max: 10
+      },
+      migrations: {
+        directory: './migrations',
+        tableName: `${this.env.table_name as string}_migrations`,
+        extension: 'ts'
       }
     };
   }
 
   private initDB(): Knex {
-    // @ts-expect-error
     return knex(this.getConfig());
   }
 
@@ -64,17 +76,11 @@ export class KnexFile {
     Logger.log('Running database migrations', KnexFile.name);
 
     const migrationConfig = {
-      database: this.env.database,
-      directory: 'dist/src/database/migrations',
-      extension: 'ts',
-      tableName: 'audit-trail-migrations',
-      disableTransactions: false,
-      loadExtensions: ['.js']
+      migrationSource: this.migrationSource
     };
 
     const [batchNo, log] = await this.db.migrate.latest(migrationConfig);
 
-    // .then(([batchNo, log]: any) => {
     if (!log.length) {
       Logger.log('Database is already up to date', KnexFile.name);
     } else {

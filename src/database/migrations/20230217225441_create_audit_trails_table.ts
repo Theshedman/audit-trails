@@ -1,5 +1,5 @@
 import { type Knex } from 'knex';
-import { Env } from '../../utils/env.js';
+import { Env } from '../../utils/env';
 
 const auditTrailTable = Env.get('table_name') as string;
 const auditTrailSchema = Env.get('schema_name') as string;
@@ -27,10 +27,10 @@ export async function up (knex: Knex): Promise<void> {
                       .primary({ constraintName: `${auditTrailTable}_id` });
                     tableBuilder.uuid('performed_by').notNullable();
                     tableBuilder.uuid('performed_for');
-                    tableBuilder.string('role');
+                    tableBuilder.string('role').notNullable();
                     tableBuilder.string('endpoint').notNullable();
                     tableBuilder.text('action');
-                    tableBuilder.string('action_type').notNullable();
+                    tableBuilder.string('description').notNullable();
                     tableBuilder.string('status').notNullable();
                     tableBuilder.string('status_code').notNullable();
                     tableBuilder.uuid('resource_id');

@@ -1,5 +1,5 @@
-import { Logger } from '../audits/audit.logger.js';
-import { type DbConnection } from '../types/index.js';
+import { Logger } from '../audits/audit.logger';
+import { type DbConnection } from '../types/index';
 
 export class Env {
   private static envs: DbConnection;

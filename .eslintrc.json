@@ -22,11 +22,15 @@
       "error",
       "always"
     ],
+    "padded-blocks": "off",
+    "@ts-expect-error": "off",
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-extraneous-class": "off",
     "@typescript-eslint/triple-slash-reference": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/space-before-function-paren": "off"
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+    "no-trailing-spaces": ["warn", { "ignoreComments": true, "skipBlankLines": true }]
   }
 }

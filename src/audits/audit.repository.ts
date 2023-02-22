@@ -1,10 +1,10 @@
 import { type Knex } from 'knex';
 
-import { Env } from '../utils/env.js';
-import { Logger } from './audit.logger.js';
-import { AuditEvent } from './audit.event.js';
-import { type KnexFile } from '../database/knexfile.js';
-import type { AuditQueryFilter, AuditTrailProps, Pagination } from '../types/index.js';
+import { Env } from '../utils/env';
+import { Logger } from './audit.logger';
+import { AuditEvent } from './audit.event';
+import { type KnexFile } from '../database/knexfile';
+import type { AuditQueryFilter, AuditTrailProps, Pagination } from '../types/index';
 
 export class AuditRepository extends AuditEvent {
   private readonly dbInstance: Knex;

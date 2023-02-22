@@ -1,10 +1,10 @@
 import { type NextFunction, type Request, type Response } from 'express';
 
-import { Logger } from './audit.logger.js';
-import { AuditEvent } from './audit.event.js';
-import { type AuditRepository } from './audit.repository.js';
-import { type RequestInterceptor } from './audit.interceptor.js';
-import type { AuditHeader, AuditTrailProps, MiddlewarePathParams } from '../types/index.js';
+import { Logger } from './audit.logger';
+import { AuditEvent } from './audit.event';
+import { AuditRepository } from './audit.repository';
+import { type RequestInterceptor } from './audit.interceptor';
+import type { AuditHeader, AuditTrailProps, MiddlewarePathParams } from '../types/index';
 
 export class Middleware extends AuditEvent {
   private readonly requestInterceptor: RequestInterceptor;
@@ -16,12 +16,16 @@ export class Middleware extends AuditEvent {
 
     this.requestInterceptor = requestInterceptor;
     this.on(this.getEvent().SAVE, (data: AuditTrailProps) => {
-      Logger.log('Listens for audit trails \'save\' event', Middleware.name);
+      Logger.log(`Listens for audit trails ${this.getEvent().SAVE} event`, Middleware.name);
 
       auditRepository
         .save(data)
-        .then(() => { })
-        .catch((e: Error) => { });
+        .then(() => {
+          Logger.log('Audit trail logged', Middleware.name);
+        })
+        .catch((e: Error) => {
+          Logger.error(e.message, AuditRepository.name);
+        });
     });
   }
 
@@ -41,18 +45,18 @@ export class Middleware extends AuditEvent {
       res.on('finish', () => {
         const auditHeaderString = res.getHeader('audit') as string;
         const auditHeader: AuditHeader = JSON.parse(auditHeaderString);
-        let { resource, resource_id: resourceId, action, performed_for: performedFor, status } = auditHeader;
+        let { resource, resource_id: resourceId, description, performed_for: performedFor, status } = auditHeader;
 
         const statusCode = res.statusCode;
         status = status || (statusCode >= 200 && statusCode < 300 ? 'successful' : 'failed');
 
         const auditTrail: AuditTrailProps = {
           status,
-          action,
           resource,
+          description,
           endpoint: url.href,
+          action: req.method,
           request_data: req.body,
-          action_type: req.method,
           resource_id: resourceId,
           performed_for: performedFor,
           status_code: `${res.statusCode}`,
@@ -64,7 +68,7 @@ export class Middleware extends AuditEvent {
         delete req.headers.aud;
         delete req.headers.role;
 
-        Logger.log('Emit audit trail \'save\' event', Middleware.name);
+        Logger.log(`Emit audit trail ${this.getEvent().SAVE} event`, Middleware.name);
         this.emit(this.getEvent().SAVE, auditTrail);
       });
 

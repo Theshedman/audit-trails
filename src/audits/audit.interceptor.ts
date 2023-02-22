@@ -1,6 +1,6 @@
-import { type Response, type Send } from 'express';
+import type { Response, Send } from 'express';
 
-import { Logger } from './audit.logger.js';
+import { Logger } from './audit.logger';
 
 export class RequestInterceptor {
   constructor() {

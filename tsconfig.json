@@ -2,18 +2,18 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationMap": true,
     "emitDeclarationOnly": false,
-    "sourceMap": true,
-    "declarationDir": "./@types",
+    "declarationDir": "./dist/@types",
     "isolatedModules": true,
     "target": "ESNext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "useDefineForClassFields": true,
     "moduleDetection": "auto",
-    "module": "NodeNext",
+    "module": "CommonJS",
     "rootDir": "./",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./dist",
@@ -35,6 +35,14 @@
     "allowUnreachableCode": false,
     "skipLibCheck": true
   },
-  "exclude": ["./dist", "./node_modules", "./types"],
-  "include": ["./src", "./**/*.json", "./**/*.js", "./test"]
+  "exclude": [
+    "./dist",
+    "./node_modules"
+  ],
+  "include": [
+    "./src",
+    "./**/*.json",
+    "./**/*.js",
+    "./test"
+  ]
 }

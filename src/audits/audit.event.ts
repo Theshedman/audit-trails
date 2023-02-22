@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import { type EventRecord } from '../types/index.js';
+import { type EventRecord } from '../types/index';
 
 export abstract class AuditEvent extends EventEmitter {
   private readonly event: EventRecord;

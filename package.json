@@ -1,13 +1,12 @@
 {
   "name": "@zigah/audit-trail",
   "version": "1.0.0",
-  "type": "module",
   "description": "An activity log to capture which element has been changed, when and by whom, as well as displaying both the old and the updated value of the changed element.",
   "main": "dist/src/main.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "test:cov": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
-    "start": "tsc && node --experimental-modules dist/src/main.js",
+    "start": "tsc && node dist/src/main.js",
     "lint": "eslint . --ext .ts --fix",
     "build": "tsc"
   },
@@ -70,7 +69,6 @@
     ],
     "moduleFileExtensions": [
       "js",
-      "json",
       "ts"
     ],
     "testRegex": ".*\\.spec\\.ts$",

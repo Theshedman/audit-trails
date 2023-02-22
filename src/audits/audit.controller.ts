@@ -1,12 +1,12 @@
-import express, { type Request, type Response } from 'express';
+import express, { type Application, type Request, type Response } from 'express';
 
-import { Logger } from './audit.logger.js';
-import { type AuditTrail } from '../main.js';
-import { type AuditTrailProps } from '../types/index.js';
-import { type AuditRepository } from './audit.repository.js';
+import { Logger } from './audit.logger';
+import { type AuditTrail } from '../main';
+import { type AuditTrailProps } from '../types/index';
+import { type AuditRepository } from './audit.repository';
 
 export class App {
-  private readonly app: express.Application;
+  private readonly app: Application;
   private readonly auditTrail: AuditTrail;
   private readonly audtRepository: AuditRepository;
 

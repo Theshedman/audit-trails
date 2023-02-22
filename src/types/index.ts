@@ -1,10 +1,10 @@
 import type { NextFunction, Request, Response } from 'express';
 
-export interface Options {
+export type Options = {
   connection: DbConnection
 }
 
-export interface DbConnection {
+export type DbConnection = {
   host: string
   user: string
   password: string
@@ -15,63 +15,74 @@ export interface DbConnection {
   port?: number | string
 }
 
-export interface DbSSL {
+export type DbSSL = {
   rejectUnauthorized: boolean
 }
 
-export interface Pool {
+export type Pool = {
   min: number
   max: number
 }
 
-export interface ConfigObject {
+export type ConfigObject = {
   searchPath: string
   client: string
   connection: DbConnection
   pool: Pool
   debug?: boolean
+  seeds?: FileMetaData
+  migrations?: FileMetaData
 }
 
-export interface AuditTrailProps {
+type FileMetaData = {
+  directory: string
+  tableName?: string
+  extension: FileExtension
+}
+
+type FileExtension = 'ts' | '.ts' | 'js' | '.js';
+
+export type AuditTrailProps = {
   id?: string
-  performed_by: string
-  performed_for?: string
   role?: string
-  endpoint: string
-  action?: string
-  action_type: string
   status: string
-  status_code: string
-  resource_id?: string
-  resource?: string
-  request_data?: any
-  response_msg?: string
+  action?: string
+  endpoint: string
   created_at?: Date
   updated_at?: Date
+  resource?: string
+  request_data?: any
+  description: string
+  status_code: string
+  resource_id?: string
+  performed_by: string
+  response_msg?: string
+  performed_for?: string
 }
 
 export type PathParams = string | RegExp | Array<string | RegExp>;
+
 export type MiddlewarePathParams = (req: Request, res: Response, next: NextFunction) => void
 
-export type AuditHeader = Pick<AuditTrailProps, 'action' | 'status' | 'resource_id' | 'resource' | 'performed_for'>
+export type AuditHeader = Pick<AuditTrailProps, 'description' | 'status' | 'resource_id' | 'resource' | 'performed_for'>
 
 export type AuditEventName = Readonly<'save' | 'intercept' | 'save-success' | 'end' | 'error'>
 
 export type EventRecord<T extends AuditEventName = AuditEventName> = Readonly<Record<Uppercase<T>, T>>
 
-export interface AuditQueryFilter {
+export type AuditQueryFilter = {
   status?: string
   role?: string
   resource?: string
   date_range?: DateFilter
 }
 
-interface DateFilter {
+type DateFilter = {
   start_date: string
   end_date: string
 }
 
-export interface Pagination {
+export type Pagination = {
   page: number
   size: number
 }

@@ -14,7 +14,6 @@ stages:
           versionSource: 'spec'
           versionSpec: '16.x'
         displayName: 'Install Node.js'
-
       - script: |
           npm install
         displayName: 'Install dependencies'
