@@ -21,9 +21,6 @@ stages:
       - script: |
           npm run build
         displayName: 'Compile Typescript'
-      - script: |
-          npm pack
-        displayName: 'NPM Package'
       - task: PublishPipelineArtifact@1
         displayName: Publish pipeline artifact
         inputs:
