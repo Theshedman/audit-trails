@@ -20,7 +20,7 @@ stages:
         displayName: 'Install dependencies'
       - script: |
           npm pack
-      displayName: 'Package package'
+        displayName: 'Package package'
       - task: CopyFiles@2
         inputs:
           contents: '*.tgz'
